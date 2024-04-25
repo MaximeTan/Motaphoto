@@ -18,15 +18,15 @@ add_filter('upload_mimes', 'wpc_mime_types');
 
 function assets()
 {
-    wp_enqueue_style('style', get_template_directory_uri() . '/css/main.css', array(), '1.0');
-    wp_enqueue_style('style-single', get_template_directory_uri() . '/css/single.css', array(), '0.1');
+    wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/main.css', array(), '1.0');
+    wp_enqueue_style('style-single', get_template_directory_uri() . '/assets/css/single.css', array(), '0.1');
 }
 add_action('wp_enqueue_scripts', 'assets');
 
 function script()
 {
-    wp_enqueue_script('modal', get_template_directory_uri() . '/js/script.js', array('jquery'), '1.0', true);
-    wp_enqueue_script('burger', get_template_directory_uri() . '/js/menu_burger.js', array('jquery'), '1.0', true);
+    wp_enqueue_script('modal', get_template_directory_uri() . '/assets/js/script.js', array('jquery'), '1.0', true);
+    wp_enqueue_script('burger', get_template_directory_uri() . '/assets/js/menu_burger.js', array('jquery'), '1.0', true);
 
 }
 add_action('wp_enqueue_scripts', 'script');
