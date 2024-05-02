@@ -6,7 +6,7 @@ function loadMore() {
     $posts_per_page = 8;
 
     $ajaxposts = new WP_Query(array(
-        'post_type'      => 'photo',
+        'post_type'      => 'photos',
         'posts_per_page' => $posts_per_page,
         'orderby'        => 'date',
         'order'          => 'ASC',
@@ -21,7 +21,7 @@ function loadMore() {
         ob_start(); // Start output buffering
 
         while ($ajaxposts->have_posts()) : $ajaxposts->the_post();
-            get_template_part('assets/template-parts/photo-block');
+            get_template_part('/template-parts/front-page/galerie-single');
         endwhile;
         
         $response .= ob_get_clean();
@@ -44,15 +44,15 @@ add_action('wp_ajax_nopriv_loadMore', 'loadMore');
 function ajaxFilter() {
     $categorie = isset($_POST['categorie']) ? $_POST['categorie'] : '';
     $format = isset($_POST['format']) ? $_POST['format'] : '';
-    $date = isset($_POST['date']) ? $_POST['date'] : '';
+    $sortByDate = isset($_POST['sortByDate']) ? $_POST['sortByDate'] : '';
 
     // Check if any filters are selected
 
     $gallery_args = array(
         'post_type' => 'photos',
         'posts_per_page' => -1,
+        'order' => ($sortByDate === 'ASC') ? 'ASC' : 'DESC',
         'orderby' => 'date',
-        'order' => ($date === 'DESC') ? 'DESC' : 'ASC',
         'post_status' => 'publish',
         'paged' => 1,
     );
@@ -78,7 +78,7 @@ function ajaxFilter() {
     if ($query->have_posts()) {
         ob_start();
         while ($query->have_posts()) : $query->the_post();
-            get_template_part('assets/template-parts/photo-block');
+            get_template_part('/template-parts/front-page/galerie-single');
         endwhile;
         $content = ob_get_clean();
         echo $content;

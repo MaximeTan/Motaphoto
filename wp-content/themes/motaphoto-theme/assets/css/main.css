@@ -68,6 +68,10 @@ body {
   margin: 0 auto;
   background-color: #f1f1f1;
 }
+a {
+  text-decoration: none;
+}
+
 /* --------------- HEADER ----------------- */
 /* On cache la barre pour la version desktop */
 header {
@@ -130,12 +134,12 @@ header .nav-toggler.active .l3 {
   transform: translateY(0px) rotate(-45deg);
 }
 
-#header a {
-  text-decoration: none;
-}
 #header.active {
   display: flex;
+    /* IE scroll 숨김 */
+    -ms-overflow-style: none;
 }
+
 #header ul {
   display: flex;
   justify-content: space-around;
@@ -255,8 +259,6 @@ object-fit: cover;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* a enlever */
-  margin-bottom: 400px;
 }
 
 .selector {
@@ -323,9 +325,86 @@ object-fit: cover;
   }
 }
 
-
 /* --------- GALERIE PHOTOS -------- */
 .galerie__photos {
   display:flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px 0;
 }
+
+.galerie__photos--single {
+  height: 50vh;
+  width: 49%;
+  position: relative;
+  overflow: hidden;
+}
+.galerie__photos--single img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 920px) {
+  .galerie__photos--single {
+    width: 100%;
+  }
+}
+
+.fadedbox {
+	z-index: 15;
+	position: absolute; 
+	width: 100%;
+	height: 100%;
+	top: 0;
+    left: 0%;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	visibility: hidden;
+	opacity: 0;
+	transition: 0.3s linear;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+.galerie__photos--single:hover .fadedbox {
+    opacity: 1;
+    visibility: visible;
+}
+.fadedbox__text {
+  font-family: "Poppins";
+}
+.fadedbox__ref,
+.fadedbox__cat {
+	text-transform: uppercase;
+	position: absolute;	
+	right: 10px;
+	bottom: 10px;
+    font-size: var(--fs-16);
+}
+.fadedbox__ref {
+  left: 10px;
+}
+.fadedbox__fullscreen {
+position: absolute;
+cursor: pointer;
+border: none;
+top:10px;
+right: 10px;
+}
+.galerie__photos--single .icon  {
+  width: 40px;
+  height: 40px;
+}
+.fadedbox__eye {
+	display: inline-block;
+	width: 46px;
+	height: 32px;
+	position: absolute;
+	top:50%;
+	left:50%;
+	transform: translateY(-50%);
+	transform: translateX(-50%);
+	color: white;
+	z-index: 20;
+}
+/* -------------------- */
