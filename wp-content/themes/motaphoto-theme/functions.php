@@ -7,37 +7,42 @@
         wp_die('Security check failed');
     }
 }, 100);
-?>
-<?
+
+include_once get_template_directory() . './inc/ajax.php';
+
 function wpc_mime_types($mimes) {
 	$mimes['svg'] = 'image/svg xml';
 	return $mimes;
 }
 add_filter('upload_mimes', 'wpc_mime_types');
 
-include_once get_template_directory() . '/inc/ajax.php';
 
 function assets()
 {
     wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/main.css', array(), '1.0');
-    // wp_enqueue_style('style-single', get_template_directory_uri() . '/assets/css/single.css', array(), '0.1');
+    wp_enqueue_style('style-single', get_template_directory_uri() . '/assets/css/single.css', array(), '1.2');
     wp_enqueue_style('select2-style', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css', '4.1.0-rc.0', false);
 
 }
 add_action('wp_enqueue_scripts', 'assets');
 
 
-function script()
+
+
+function scripts()
 {   
-    wp_enqueue_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js', array(), '1.0', true);
+    wp_enqueue_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js', array(), null, true);
     wp_enqueue_script('select2-script', 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js', array('jquery'), '4.1.0-rc.0', true);
     wp_enqueue_script('select2', get_template_directory_uri() . '/assets/js/select2.js', array('jquery'), '4.1.0-rc.0', true);
-    wp_enqueue_script('script-js', get_template_directory_uri() . '/assets/js/script.js', array('jquery'), '1.1', true);
-    wp_enqueue_script('filters-js', get_template_directory_uri() . '/assets/js/filters.js', array('jquery'), '1.2', true);
-    wp_enqueue_script('loadMore-js', get_template_directory_uri() . '/assets/js/load-more.js', array('jquery'), '1.2', true);
+    wp_enqueue_script('filters-js', get_template_directory_uri() . '/assets/js/filters.js', array('jquery'), null, true);
+    wp_enqueue_script('menu-burger-js', get_template_directory_uri() . '/assets/js/menu-burger.js', array('jquery'), null, true);
+    wp_enqueue_script('load-more', get_template_directory_uri() . '/assets/js/load-more.js', array('jquery'), null, true);
+    wp_enqueue_script('modale-js', get_template_directory_uri() . '/assets/js/modale-contact.js', array('jquery'), '1.0', true);
+    wp_enqueue_script('lightbox-js', get_template_directory_uri() . '/assets/js/lightbox.js', array('jquery'), null, true);
+    wp_enqueue_script('scripts-js', get_template_directory_uri() . '/assets/js/script.js', array('jquery'), null, true);
 	
 }
-add_action('wp_enqueue_scripts', 'script');
+add_action('wp_enqueue_scripts', 'scripts');
 
 
 function montheme_supports()
@@ -60,7 +65,7 @@ function montheme_supports()
 add_action('after_setup_theme', 'montheme_supports');
 ?>
 
-<!-- MISE EN PLACE DES CPT UI -->
+
 <? function cptui_register_my_cpts() {
 
 /**
@@ -182,6 +187,9 @@ function motaSupports()
     add_theme_support('post-thumbnails');
 }
 add_action('after_setup_theme', 'motaSupports');
+
+
+
 
 
 ?>

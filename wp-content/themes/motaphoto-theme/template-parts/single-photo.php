@@ -1,3 +1,4 @@
+
 <div class="galerie__photos--single" data-photo-src="<?php echo get_the_post_thumbnail_url(); ?>" 
                             data-photo-prev="<?php echo esc_url(get_permalink(get_previous_post())); ?>" 
                             data-photo-next="<?php echo esc_url(get_permalink(get_next_post())); ?>"

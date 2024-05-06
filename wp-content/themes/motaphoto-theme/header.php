@@ -6,8 +6,10 @@
     <title>Nathalie Mota</title>
     <?php wp_head(); ?>
 </head>
+
     <body>
         <header>
+        <?php include_once "template-parts/modale.php"; ?>
         <div class="home-bar">
             <button class="nav-toggler" type="button" aria-label="toggle curtain navigation">
                 <span class="line l1"></span>
@@ -20,9 +22,8 @@
         <nav id="header">
             <?php wp_nav_menu(array('theme_location' => 'header')); ?>
         </nav>
+       
 
-
-
-        <?php include_once "template-parts/modale.php"; ?>
+        
         </header>
 

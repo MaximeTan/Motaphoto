@@ -1,43 +1,28 @@
 <?php
 // LOAD MORE
+add_action('wp_ajax_load_more_posts', 'load_more_posts');
+add_action('wp_ajax_nopriv_load_more_posts', 'load_more_posts');
 
-function loadMore() {
-    $paged = $_POST['paged'];
-    $posts_per_page = 8;
+function load_more_posts() {
+    $paged = $_POST['page'];
 
-    $ajaxposts = new WP_Query(array(
-        'post_type'      => 'photos',
-        'posts_per_page' => $posts_per_page,
-        'orderby'        => 'date',
-        'order'          => 'ASC',
-        'post_status'    => 'publish',
-        'paged'          => $paged,
+    $gallery = new WP_Query(array(
+        'post_type' => 'photos',
+        'posts_per_page' => 8,
+        'post_status' => 'publish',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'paged' => $paged
     ));
 
-    $response = '';
-    $has_more_posts = false;
-
-    if ($ajaxposts->have_posts()) {
-        ob_start(); // Start output buffering
-
-        while ($ajaxposts->have_posts()) : $ajaxposts->the_post();
-            get_template_part('/template-parts/front-page/galerie-single');
+    if ($gallery->have_posts()) {
+        while ($gallery->have_posts()) : $gallery->the_post();
+            get_template_part('/template-parts/single-photo');
         endwhile;
-        
-        $response .= ob_get_clean();
-        // Check if there are more posts beyond the current page
-        $has_more_posts = $ajaxposts->max_num_pages > $paged;
-
-        wp_reset_postdata();
     }
 
-    echo json_encode(array('html' => $response, 'has_more_posts' => $has_more_posts));
     wp_die();
 }
-
-add_action('wp_ajax_loadMore', 'loadMore');
-add_action('wp_ajax_nopriv_loadMore', 'loadMore');
-
 
 // FILTERS AND SORT
 
@@ -78,7 +63,7 @@ function ajaxFilter() {
     if ($query->have_posts()) {
         ob_start();
         while ($query->have_posts()) : $query->the_post();
-            get_template_part('/template-parts/front-page/galerie-single');
+            get_template_part('/template-parts/single-photo');
         endwhile;
         $content = ob_get_clean();
         echo $content;
